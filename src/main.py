@@ -1,24 +1,34 @@
 
 import networkx as nx
+import pandas as pd
 from load_graph import load_graph
 from plots import draw_graph
+from metrics import degree_calc
 
 #Path to the .edge file
 path = "../data/macaque.edges"
-
 G = load_graph(path)
-
-
-#Variables to indicate the number of nodes, edges and if it's directional
-nodes = nx.number_of_nodes(G)
-edges = nx.number_of_edges(G)
-directed = nx.is_directed(G)
-
-print(f"Number of nodes: {nodes}")
-print(f"Number of edges: {edges}")
-print(f"Is directed: {directed}")
 
 #Function used to draw the graph
 draw_graph(G)
+
+#Function used calculate the degree of each node
+degree = degree_calc(G)
+
+data = []
+
+#Goes through every node and creates a list of dicts
+for node in nx.nodes(G):
+    data.append({
+        "node": node,
+        "degree": degree[node]
+    })
+
+#Creation of the csv file with the result of the metrics
+df = pd.DataFrame(data)
+df.to_csv("../results/metrics_results.csv", index=False)
+
+
+
 
 
