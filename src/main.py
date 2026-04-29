@@ -3,7 +3,7 @@ import networkx as nx
 import pandas as pd
 from load_graph import load_graph
 from plots import draw_graph
-from metrics import degree_calc, in_degree_calc, out_degree_calc
+from metrics import degree_calc, in_degree_calc, out_degree_calc, betweenness_calc, closeness_calc, clustering_calc
 
 
 #Path to the .edge file
@@ -17,6 +17,9 @@ draw_graph(G)
 degree = degree_calc(G)
 in_degree = in_degree_calc(G)
 out_degree = out_degree_calc(G)
+betweenness_c = betweenness_calc(G)
+closeness = closeness_calc(G)
+clustering = clustering_calc(G)
 
 data = []
 
@@ -26,8 +29,10 @@ for node in nx.nodes(G):
         "node": node,
         "degree": degree[node],
         "in_degree": in_degree[node],
-        "out_degree": out_degree[node]
-
+        "out_degree": out_degree[node],
+        "betweenness": betweenness_c[node],
+        "closeness": closeness[node],
+        "clustering": clustering[node]
     })
 
 #Creation of the csv file with the result of the metrics
